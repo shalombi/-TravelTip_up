@@ -58,6 +58,6 @@ function goLocation(elBtn, elBtn2) {
     // console.log(lat, lng, '----');
     // mapService.panTo(locationCoords.lat, locationCoords.lng)
     // lng
-    // mapService.panTo(30, 32)
+    mapService.panTo(30, 32)
 
 }
