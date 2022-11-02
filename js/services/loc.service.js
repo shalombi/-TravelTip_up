@@ -1,25 +1,47 @@
 export const locService = {
-    getLocs,
-    addLocation
+  getLocs,
+  addLocation,
 }
-// locService.addLocation
-// createdAt, updatedAt
-let gId = 101
-let gLocs = [{id:101,lat:34,lng:32,name:'home',createdAt:'18:45'}]
 
-const locs = [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
-]
+import { storageService } from './storage.service.js'
+import { utilsService } from './utils.service.js'
+
+const LOCS_KEY = 'locsDB'
+
+let gId = 103
+let gLocs = _loadLocs() || []
 
 function getLocs() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(locs)
-        }, 2000)
-    })
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(gLocs)
+    }, 2000)
+  })
 }
 
 function addLocation(lat, lng, name) {
-    console.log(lat, lng, name, 'lat,lng,name');
+  //create a new location
+  const loc = _createLoc(lat, lng, name)
+  //add new location to gLocs
+  gLocs.push(loc)
+  //save to storage
+  _saveLocs()
+}
+
+function _createLoc(lat, lng, name) {
+  return {
+    id: gId++,
+    name,
+    lat,
+    lng,
+    createdAt: utilsService.formatDate(new Date()),
+  }
+}
+
+function _loadLocs() {
+  return storageService.load(LOCS_KEY)
+}
+
+function _saveLocs() {
+  storageService.save(LOCS_KEY, gLocs)
 }
