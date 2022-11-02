@@ -50,11 +50,11 @@ function deleteLocation(elBtn) {
     console.log('deleteLocation');
     console.log(elBtn.value, 'elBtn');
 }
-function goLocation(elBtn, elBtn2) {
+function goLocation() {
     // console.log(elBtn);
     // const loc = elBtn.value
     console.log('goLocation');
-    console.log(elBtn, elBtn2);
+    // console.log(elBtn, elBtn2);
     // console.log(lat, lng, '----');
     // mapService.panTo(locationCoords.lat, locationCoords.lng)
     // lng
