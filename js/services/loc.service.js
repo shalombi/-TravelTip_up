@@ -1,63 +1,67 @@
 export const locService = {
     getLocs,
     addLocation,
+    deleteLocation
 }
 
 import { mapService } from './map.service.js'
-// mapService.panTo
-
-// import { generalControllerFunc } from '../app.controller.js'
-// generalControllerFunc.initMap
-// console.log(generalControllerFunc.initMap());
-// panTo(lat, lng)
-// console.log(mapService.panTo);
 
 
 
-window.deleteLocation = deleteLocation
-window.goLocation = goLocation
 
-// locService.addLocation
-// createdAt, updatedAt
 
-let gId = 101
 
 // TODO:  export gLocs to loc.serveries.js
-// let gLocs = [
-//     { id: 101, lat: 34, lng: 32, name: 'home1', createdAt: '18:45' },
-//     { id: 102, lat: 35, lng: 33, name: 'home2', createdAt: '18:50' },
-//     { id: 103, lat: 36, lng: 34, name: 'home3', createdAt: '18:55' }
-// ]
 
-const locs = [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
-]
+import { storageService } from './storage.service.js'
+import { utilsService } from './utils.service.js'
+
+const LOCS_KEY = 'locsDB'
+
+let gId = 103
+let gLocs = _loadLocs() || []
 
 function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve(locs)
+            resolve(gLocs)
         }, 2000)
     })
 }
 
 function addLocation(lat, lng, name) {
-    console.log(lat, lng, name, 'lat,lng,name');
+    //create a new location
+    const loc = _createLoc(lat, lng, name)
+    //add new location to gLocs
+    gLocs.push(loc)
+    //save to storage
+    _saveLocs()
 }
-// d
-function deleteLocation(elBtn) {
-    console.log('deleteLocation');
-    console.log(elBtn.value, 'elBtn');
-}
-function goLocation() {
-    // console.log(elBtn);
-    // const loc = elBtn.value
-    console.log('goLocation');
-    // console.log(elBtn, elBtn2);
-    // console.log(lat, lng, '----');
-    // mapService.panTo(locationCoords.lat, locationCoords.lng)
-    // lng
-    mapService.panTo(30, 32)
 
+
+function deleteLocation(idx) {
+    const deletedLoc = gLocs.splice(idx, 1)
+    console.log('deletedLoc', deletedLoc);
+    _saveLocs()
 }
+
+function _createLoc(lat, lng, name) {
+    return {
+        id: gId++,
+        name,
+        lat,
+        lng,
+        createdAt: utilsService.formatDate(new Date()),
+    }
+}
+
+function _loadLocs() {
+    return storageService.load(LOCS_KEY)
+}
+
+function _saveLocs() {
+    storageService.save(LOCS_KEY, gLocs)
+}
+//
+
+
