@@ -1,9 +1,11 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    initMap
 }
 
+// 
 import { locService } from './loc.service.js'
 import { renderFunc } from '../app.controller.js'
 
@@ -45,8 +47,10 @@ function addMarker(loc) {
 }
 
 function panTo(lat, lng) {
+    console.log('panTo');
     var laLatLng = new google.maps.LatLng(lat, lng)
     gMap.panTo(laLatLng)
+
 }
 
 function _connectGoogleApi() {

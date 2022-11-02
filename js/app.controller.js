@@ -2,6 +2,8 @@ import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
 export const renderFunc = { renderLocations }
+// export const generalControllerFunc = { initMap }
+// generalControllerFunc.initMap
 // renderFunc.renderLocations
 
 window.onload = onInit
@@ -78,11 +80,12 @@ function renderLocations() {
     let strHTML = `<tbody>`
     // console.log('locations',locations);
     // button
+    //TODO : SEND OBJECT AS A PARAMETER // AT <td><button value =  onclick="goLocation(this)">Go</button></td> 
     locations.forEach((loc, idx) => strHTML += (
         `
       <tr>
         <td><button value = "${locations[idx].id}" onclick="deleteLocation(this)">Delete</button></td>
-        <td><button value = "{lat:${locations[idx].lat}, lng: ${locations[idx].lng}}" onclick="goLocation(this)">Go</button></td> 
+        <td><button value =  onclick="goLocation(this)">Go</button></td> 
         <td> id:\t ${locations[idx].id}, lat:\t ${locations[idx].lat}, lng:\t ${locations[idx].lng}, name: ${locations[idx].name}, createdAt: ${locations[idx].createdAt} \n </td>
       </tr>
     `
@@ -90,7 +93,7 @@ function renderLocations() {
     strHTML += `</tbody>`
     // {id: 101, lat: 34, lng: 32, name: 'home1', createdAt: '18:45'}
     elTableContainer.innerHTML = strHTML
-
+    // lat: 36, lng: 34
 }
 
 

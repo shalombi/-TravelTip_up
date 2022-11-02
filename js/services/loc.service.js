@@ -3,6 +3,17 @@ export const locService = {
     addLocation,
 }
 
+import { mapService } from './map.service.js'
+// mapService.panTo
+
+// import { generalControllerFunc } from '../app.controller.js'
+// generalControllerFunc.initMap
+// console.log(generalControllerFunc.initMap());
+// panTo(lat, lng)
+// console.log(mapService.panTo);
+
+
+
 window.deleteLocation = deleteLocation
 window.goLocation = goLocation
 
@@ -39,7 +50,14 @@ function deleteLocation(elBtn) {
     console.log('deleteLocation');
     console.log(elBtn.value, 'elBtn');
 }
-function goLocation(elBtn) {
+function goLocation(elBtn, elBtn2) {
+    // console.log(elBtn);
+    // const loc = elBtn.value
     console.log('goLocation');
-    console.log(elBtn.value);
+    console.log(elBtn, elBtn2);
+    // console.log(lat, lng, '----');
+    // mapService.panTo(locationCoords.lat, locationCoords.lng)
+    // lng
+    // mapService.panTo(30, 32)
+
 }
