@@ -2,13 +2,14 @@ export const mapService = {
   initMap,
   addMarker,
   panTo,
+  showUserLoc,
 }
 
 import { locService } from './loc.service.js'
 import { storageService } from './storage.service.js'
 
 // Var that is used throughout this Module (not global)
-var gMap
+var gMap, infoWindow
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
   console.log('InitMap')
@@ -40,6 +41,40 @@ function addMarker(loc) {
   return marker
 }
 
+function showUserLoc() {
+  const locationButton = document.createElement('button')
+
+  locationButton.textContent = 'Pan to Current Location'
+  locationButton.classList.add('custom-map-control-button')
+  gMap.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton)
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const pos = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }
+        gMap.setCenter(pos)
+      },
+      () => {
+        handleLocationError(true, infoWindow, map.getCenter())
+      }
+    )
+  } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter())
+  }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  infoWindow.setPosition(pos)
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? 'Error: The Geolocation service failed.'
+      : "Error: Your browser doesn't support geolocation."
+  )
+}
+
 function panTo(lat, lng) {
   var laLatLng = new google.maps.LatLng(lat, lng)
   gMap.panTo(laLatLng)
@@ -48,7 +83,6 @@ function panTo(lat, lng) {
 function _connectGoogleApi() {
   if (window.google) return Promise.resolve()
   const API_KEY = 'AIzaSyA-1aMyp3nQr5PbdGaMQo6FTXCj5fupAvU'
-  // const API_KEY = '' //TODO: Enter your API Key
   var elGoogleApi = document.createElement('script')
   elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
   elGoogleApi.async = true
