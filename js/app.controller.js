@@ -52,6 +52,9 @@ function onPanTo() {
     mapService.panTo(35.6895, 139.6917)
 }
 
+function renderLocations() {
+    console.log('renderLocations');
+}
 
 // function goLocation() {
 //     console.log('go location');
