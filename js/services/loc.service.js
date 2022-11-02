@@ -45,7 +45,7 @@ function getLocs() {
 function addLocation(lat, lng, name) {
     console.log(lat, lng, name, 'lat,lng,name');
 }
-
+// d
 function deleteLocation(elBtn) {
     console.log('deleteLocation');
     console.log(elBtn.value, 'elBtn');
