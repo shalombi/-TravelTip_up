@@ -5,7 +5,9 @@ export const mapService = {
 }
 
 import { locService } from './loc.service.js'
+import { renderFunc } from '../app.controller.js'
 
+// renderFunc.renderLocations()
 // Var that is used throughout this Module (not global)
 var gMap
 
@@ -20,7 +22,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 zoom: 15
             })
             gMap.addListener('click', addMarker)
-            renderLocations()
+            renderFunc.renderLocations()
             console.log('Map!', gMap)
         })
 }
@@ -38,6 +40,7 @@ function addMarker(loc) {
     })
     locService.addLocation(lat, lng, name)
     console.log('marker', marker);
+    renderFunc.renderLocations()
     return marker
 }
 
@@ -60,3 +63,6 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
+
+

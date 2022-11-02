@@ -1,10 +1,14 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
+export const renderFunc = { renderLocations }
+// renderFunc.renderLocations
+
 window.onload = onInit
 window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
+window.onGetUserPos = onGetUserPos
 window.onGetUserPos = onGetUserPos
 
 function onInit() {
@@ -52,9 +56,43 @@ function onPanTo() {
     mapService.panTo(35.6895, 139.6917)
 }
 
+
+///////////////
+
+let gLocs = [
+    { id: 101, lat: 34, lng: 32, name: 'home1', createdAt: '18:45' },
+    { id: 102, lat: 35, lng: 33, name: 'home2', createdAt: '18:50' },
+    { id: 103, lat: 36, lng: 34, name: 'home3', createdAt: '18:55' }
+]
+
+function getGlocations() {
+    return gLocs
+}
+
 function renderLocations() {
     console.log('renderLocations');
+    // console.log('gLocs', gLocs);
+    const locations = getGlocations()
+    console.log();
+    const elTableContainer = document.querySelector('.location-table-container table')
+    let strHTML = `<tbody>`
+    // console.log('locations',locations);
+    // button
+    locations.forEach((loc, idx) => strHTML += (
+        `
+      <tr>
+        <td><button value = "${locations[idx].id}" onclick="deleteLocation(this)">Delete</button></td>
+        <td><button value = "{lat:${locations[idx].lat}, lng: ${locations[idx].lng}}" onclick="goLocation(this)">Go</button></td> 
+        <td> id:\t ${locations[idx].id}, lat:\t ${locations[idx].lat}, lng:\t ${locations[idx].lng}, name: ${locations[idx].name}, createdAt: ${locations[idx].createdAt} \n </td>
+      </tr>
+    `
+    ))
+    strHTML += `</tbody>`
+    // {id: 101, lat: 34, lng: 32, name: 'home1', createdAt: '18:45'}
+    elTableContainer.innerHTML = strHTML
+
 }
+
 
 // function goLocation() {
 //     console.log('go location');
