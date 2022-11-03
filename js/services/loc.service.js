@@ -5,14 +5,6 @@ export const locService = {
 }
 
 import { mapService } from './map.service.js'
-
-
-
-
-
-
-// TODO:  export gLocs to loc.serveries.js
-
 import { storageService } from './storage.service.js'
 import { utilsService } from './utils.service.js'
 
